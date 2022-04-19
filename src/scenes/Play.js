@@ -17,7 +17,7 @@ class Play extends Phaser.Scene {
         this.playSong = this.sound.add('playMusic');
         this.playSong.play();
         this.playSong.loop = true;
-        
+
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
 
@@ -89,9 +89,11 @@ class Play extends Phaser.Scene {
       update(time, delta) {
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+          this.playSong.stop();
           this.scene.restart();
         } 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+          this.playSong.stop();
           this.scene.start("menuScene");
       }
 
