@@ -8,6 +8,9 @@ class Play extends Phaser.Scene {
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
+        this.load.image('spark0', './assets/whiteParticle.png');
+        this.load.image('spark1', './assets/greenParticle.png');
+        this.load.image('spark2', './assets/yellowParticle.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
       }
@@ -81,6 +84,7 @@ class Play extends Phaser.Scene {
       update(time, delta) {
         // check if time is up and call game over
         if(this.timeLeft <= 0 && this.gameOver != true) {
+          //game over menu
           let endConfig = {
             fontFamily: 'Courier',
             fontSize: '24px',
@@ -107,7 +111,7 @@ class Play extends Phaser.Scene {
           this.scene.start("menuScene");
       }
 
-        this.starfield.tilePositionX -= 4; // background scrolling
+        this.starfield.tilePositionX -= 2; // background scrolling
         if (!this.gameOver) {               
           this.p1Rocket.update();         // update rocket sprite
           this.ship01.update();           // update spaceships (x3)
@@ -151,6 +155,40 @@ class Play extends Phaser.Scene {
     shipExplode(ship) {
       // temporarily hide ship
       ship.alpha = 0;
+      // create explosion particles at ship's position
+      var emitter0 = this.add.particles('spark0').createEmitter({
+        x: ship.x,
+        y: ship.y + 16,
+        speed: { min: -400, max: 400 },
+        angle: { min: 0, max: 360 },
+        scale: { start: 2, end: 0 },
+        blendMode: 'SCREEN',
+        //active: false,
+        lifespan: 300,
+      });
+      var emitter1 = this.add.particles('spark1').createEmitter({
+        x: ship.x,
+        y: ship.y + 16,
+        speed: { min: -400, max: 400 },
+        angle: { min: 0, max: 360 },
+        scale: { start: 2, end: 0 },
+        blendMode: 'SCREEN',
+        //active: false,
+        lifespan: 300,
+      });
+      var emitter2 = this.add.particles('spark2').createEmitter({
+        x: ship.x,
+        y: ship.y + 16,
+        speed: { min: -400, max: 400 },
+        angle: { min: 0, max: 360 },
+        scale: { start: 2, end: 0 },
+        blendMode: 'SCREEN',
+        //active: false,
+        lifespan: 300,
+      });
+      emitter0.explode(10);
+      emitter1.explode(10);
+      emitter2.explode(10);
       // create explosion sprite at ship's position
       let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
       boom.anims.play('explode');             // play explode animation

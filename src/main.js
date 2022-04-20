@@ -9,6 +9,7 @@
 * Add your own (copyright-free) background music to the Play scene (5)
 * Display the time remaining (in seconds) on the screen (10)
 * Implement a new timing/scoring mechanism that adds time to the clock for successful hits (20)
+* Use Phaser's particle emitter to create a particle explosion when the rocket hits the spaceship (20)
 */
 let config = {
     type: Phaser.CANVAS,
