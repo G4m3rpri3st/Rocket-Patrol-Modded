@@ -76,17 +76,27 @@ class Play extends Phaser.Scene {
 
         // GAME OVER flag
         this.gameOver = false;
-
-        // play clock
-        scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
-            this.gameOver = true;
-        }, null, this);
       }
 
       update(time, delta) {
+        // check if time is up and call game over
+        if(this.timeLeft <= 0 && this.gameOver != true) {
+          let endConfig = {
+            fontFamily: 'Courier',
+            fontSize: '24px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'center',
+            padding: {
+              top: 5,
+              bottom: 5,
+            },
+            fixedWidth: 0
+          }
+          this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', endConfig).setOrigin(0.5);
+          this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', endConfig).setOrigin(0.5);
+          this.gameOver = true;
+        }
         // check key input for restart
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
           this.playSong.stop();
@@ -149,7 +159,8 @@ class Play extends Phaser.Scene {
         ship.alpha = 1;                       // make ship visible again
         boom.destroy();                       // remove explosion sprite
       });
-      // score add and repaint
+      // add score and time and repaint
+      this.timeLeft += 1000;
       this.p1Score += ship.points;
       if (highScore < this.p1Score){
         highScore = this.p1Score;
@@ -158,4 +169,5 @@ class Play extends Phaser.Scene {
       this.scoreLeft.text = 'Score:' + this.p1Score;
       this.sound.play('sfx_explosion');       
     }
+    
 }
