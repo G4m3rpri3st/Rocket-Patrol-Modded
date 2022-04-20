@@ -2,7 +2,7 @@
 * Author: Logan Flansaas
 * Date: 4/18/2022
 * Title: Rocket Patrol 2: Electric Boogalo
-* Time to complete: X hours
+* Time to complete: 16 hours
 * ----------------------------------------
 * Points breakdown:
 * Track a high score that persists across scenes and display it in the UI (5)
